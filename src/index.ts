@@ -19,7 +19,29 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const url = `https://food-ordering-app-backend-n0rv.onrender.com`;
+const app = express();
+// middleware which converts body of any request to api server to json
+
+app.use(cors());
+
+app.use("/api/order/checkout/webhook", express.raw({ type: "*/*" }));
+
+app.use(express.json());
+
+app.get("/health", async (req: Request, res: Response) => {
+  res.send({ message: "Health ok !" });
+});
+
+app.use("/api/my/user", myUserRoute);
+app.use("/api/my/restaurant", myRestaurantRoute);
+app.use("/api/restaurant", restaurantRoute);
+app.use("/api/order", orderRoute);
+
+app.listen(7000, () => {
+  console.log("server started on localhost:7000");
+});
+
+const url = `https://food-ordering-app-backend-n0rv.onrender.com/health`;
 
 const interval = 30000;
 
@@ -42,25 +64,3 @@ function reloadWebsite() {
 }
 
 setInterval(reloadWebsite, interval);
-
-const app = express();
-// middleware which converts body of any request to api server to json
-
-app.use(cors());
-
-app.use("/api/order/checkout/webhook", express.raw({ type: "*/*" }));
-
-app.use(express.json());
-
-app.get("/health", async (req: Request, res: Response) => {
-  res.send({ message: "Health ok !" });
-});
-
-app.use("/api/my/user", myUserRoute);
-app.use("/api/my/restaurant", myRestaurantRoute);
-app.use("/api/restaurant", restaurantRoute);
-app.use("/api/order", orderRoute);
-
-app.listen(7000, () => {
-  console.log("server started on localhost:7000");
-});
