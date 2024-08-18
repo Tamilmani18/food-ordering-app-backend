@@ -7,6 +7,7 @@ import myRestaurantRoute from "./routes/MyRestaurantRoute";
 import restaurantRoute from "./routes/RestaurantRoute";
 import { v2 as cloudinary } from "cloudinary";
 import orderRoute from "./routes/OrderRoute";
+import axios from "axios";
 
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING as string)
@@ -39,3 +40,26 @@ app.use("/api/order", orderRoute);
 app.listen(7000, () => {
   console.log("server started on localhost:7000");
 });
+
+const url = `https://food-ordering-app-backend-n0rv.onrender.com/`;
+const interval = 30000;
+
+function reloadWebsite() {
+  axios
+    .get(url)
+    .then((response) => {
+      console.log(
+        `Reloaded at ${new Date().toISOString()}: Status Code ${
+          response.status
+        }`
+      );
+    })
+    .catch((error) => {
+      console.error(
+        `Error reloading at ${new Date().toISOString()}:`,
+        error.message
+      );
+    });
+}
+
+setInterval(reloadWebsite, interval);
