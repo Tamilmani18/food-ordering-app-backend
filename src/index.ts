@@ -41,7 +41,8 @@ app.listen(7000, () => {
   console.log("server started on localhost:7000");
 });
 
-const url = `https://food-ordering-app-backend-n0rv.onrender.com/`;
+const url = `https://food-ordering-app-backend-n0rv.onrender.com`;
+
 const interval = 30000;
 
 function reloadWebsite() {
