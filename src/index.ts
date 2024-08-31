@@ -43,7 +43,7 @@ app.listen(7000, () => {
 
 const url = `https://food-ordering-app-backend-n0rv.onrender.com/health`;
 
-const interval = 30000;
+const interval = 180000000; // 1800000
 
 function reloadWebsite() {
   axios
