@@ -46,21 +46,29 @@ const url = `https://food-ordering-app-backend-n0rv.onrender.com/health`;
 const interval = 90000;
 
 function reloadWebsite() {
-  axios
-    .get(url)
-    .then((response) => {
-      console.log(
-        `Reloaded at ${new Date().toISOString()}: Status Code ${
-          response.status
-        }`
-      );
-    })
-    .catch((error) => {
-      console.error(
-        `Error reloading at ${new Date().toISOString()}:`,
-        error.message
-      );
-    });
+  const now = new Date();
+  const currentHour = now.getHours();
+  if (currentHour >= 6 && currentHour < 18) {
+    axios
+      .get(url)
+      .then((response) => {
+        console.log(
+          `Reloaded at ${new Date().toISOString()}: Status Code ${
+            response.status
+          }`
+        );
+      })
+      .catch((error) => {
+        console.error(
+          `Error reloading at ${new Date().toISOString()}:`,
+          error.message
+        );
+      });
+  } else {
+    console.log(
+      `Skipping reload at ${new Date().toISOString()}: Outside daytime hours.`
+    );
+  }
 }
 
 setInterval(reloadWebsite, interval);
